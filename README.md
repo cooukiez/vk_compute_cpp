@@ -1,2 +1,2 @@
 # vk_wrapper_cpp
-Vulkan-API compute example written in C++, based of https://vulkan-tutorial.com/ with chapter 27 depth buffering (mostly removed, it is just based on the repository https://github.com/cooukiez/vk_wrapper_cpp) mixed with chapter 31 compute.
+Vulkan-API compute example written in C++, based of https://vulkan-tutorial.com/ with chapter 27 depth buffering (mostly removed, it is just based on my repository https://github.com/cooukiez/vk_wrapper_cpp) mixed with chapter 31 compute.

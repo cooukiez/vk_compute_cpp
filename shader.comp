@@ -13,5 +13,5 @@ layout(binding = 1) writeonly buffer BufferOut {
 void main() {
     uvec3 invoo_max = gl_NumWorkGroups * gl_WorkGroupSize;
     uint invoc = gl_GlobalInvocationID.x;
-    buf_out.data[invoc % 9] = buf_in.data[invoc % 9] * 2.0f;
+    buf_out.data[invoc % 10] = buf_in.data[invoc % 10] * 2.0f;
 }

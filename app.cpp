@@ -48,7 +48,7 @@ void App::create_data_buf() {
 
     // create some sample data
     for (size_t i = 0; i < 10; i++) {
-        voxels[i] = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
+        voxels[i] = glm::vec4(1.0f, 0.0f, 0.0f, 0.0f);
     }
 
     unmap_buf(&staging_buf);
@@ -148,7 +148,7 @@ void App::compute() {
     vkCmdBindPipeline(cmd_buf, VK_PIPELINE_BIND_POINT_COMPUTE, pipe);
     vkCmdBindDescriptorSets(cmd_buf, VK_PIPELINE_BIND_POINT_COMPUTE, pipe_layout, 0, 1, &desc_sets[0], 0, nullptr);
 
-    vkCmdDispatch(cmd_buf, 1, 1, 1);
+    vkCmdDispatch(cmd_buf, 10, 1, 1);
 
     end_single_time_cmd(cmd_buf);
 }
@@ -156,8 +156,8 @@ void App::compute() {
 void App::get_results() {
     map_buf(&result_buf);
 
-    glm::vec4 *results;
-    std::memcpy(&results, result_buf.p_mapped_mem, result_buf.size);
+    std::array<glm::vec4, 10> results{};
+    std::memcpy(results.data(), result_buf.p_mapped_mem, result_buf.size);
 
     unmap_buf(&result_buf);
 
@@ -171,6 +171,9 @@ void App::clean_up() {
     vkDestroyPipelineLayout(dev, pipe_layout, nullptr);
 
     clean_up_desc();
+
+    clean_up_buf(result_buf);
+    clean_up_buf(data_buf);
 
     vkDestroyCommandPool(dev, cmd_pool, nullptr);
     vkDestroyDevice(dev, nullptr);
