@@ -1,0 +1,17 @@
+#version 450
+
+layout (local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
+
+layout(binding = 0) readonly buffer BufferIn {
+    vec4 data[10];
+} buf_in;
+
+layout(binding = 1) writeonly buffer BufferOut {
+    vec4 data[10];
+} buf_out;
+
+void main() {
+    uvec3 invoo_max = gl_NumWorkGroups * gl_WorkGroupSize;
+    uint invoc = gl_GlobalInvocationID.x;
+    buf_out.data[invoc % 9] = buf_in.data[invoc % 9] * 2.0f;
+}
